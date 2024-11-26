@@ -41,19 +41,30 @@ unittest_teardown()
 unittest(test_constants)
 {
   fprintf(stderr, "\nerrorcodes");
-  assertEqual(PCA963X_OK         , 0x00);
-  assertEqual(PCA963X_ERROR      , 0xFF);
-  assertEqual(PCA963X_ERR_WRITE  , 0xFE);
-  assertEqual(PCA963X_ERR_CHAN   , 0xFD);
-  assertEqual(PCA963X_ERR_MODE   , 0xFC);
-  assertEqual(PCA963X_ERR_REG    , 0xFB);
-  assertEqual(PCA963X_ERR_I2C    , 0xFA);
+  assertEqual(PCA9632_OK         , 0x00);
+  assertEqual(PCA9632_ERROR      , 0xFF);
+  assertEqual(PCA9632_ERR_WRITE  , 0xFE);
+  assertEqual(PCA9632_ERR_CHAN   , 0xFD);
+  assertEqual(PCA9632_ERR_MODE   , 0xFC);
+  assertEqual(PCA9632_ERR_REG    , 0xFB);
+  assertEqual(PCA9632_ERR_I2C    , 0xFA);
 }
 
 
-unittest(test_constructor)
+unittest(test_constructor_pca9632)
 {
-  PCA9632 RGBW(0x20);
+  PCA9632 RGBW(0x60);
+
+  Wire.begin();
+
+  assertTrue(RGBW.begin());
+  assertTrue(RGBW.isConnected());
+}
+
+
+unittest(test_constructor_pca9633)
+{
+  PCA9633 RGBW(0x60);
 
   Wire.begin();
 
