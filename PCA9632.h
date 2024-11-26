@@ -59,6 +59,8 @@
 #define PCA9632_MODE1_SUB3          0x02  //  0 = disable      1 = enable
 #define PCA9632_MODE1_ALLCALL       0x01  //  0 = disable      1 = enable
 #define PCA9632_MODE1_NONE          0x00
+#define PCA9632_MODE1_DEFAULT       0x81
+
 
 //  Configuration bits MODE2 REGISTER
 #define PCA9632_MODE2_BLINK         0x20  //  0 = dim          1 = blink
@@ -66,6 +68,7 @@
 #define PCA9632_MODE2_ACK           0x08  //  0 = on STOP      1 = on ACK
 #define PCA9632_MODE2_TOTEMPOLE     0x04  //  0 = open drain   1 = totem-pole
 #define PCA9632_MODE2_NONE          0x00
+#define PCA9632_MODE2_DEFAULT       0x01
 
 //  modi for LEDOUT REGISTER (4x shifted))
 #define PCA9632_LEDOFF              0x00  //  default @ startup
@@ -80,8 +83,8 @@ class PCA9632
 public:
   explicit PCA9632(const uint8_t deviceAddress, TwoWire *wire = &Wire);
 
-  bool     begin(uint8_t mode1_mask = PCA9632_MODE1_AUTOINCR2 | PCA9632_MODE1_ALLCALL,
-                 uint8_t mode2_mask = PCA9632_MODE2_NONE);
+  bool     begin(uint8_t mode1_mask = PCA9632_MODE1_DEFAULT, 
+                 uint8_t mode2_mask = PCA9632_MODE2_DEFAULT);
   bool     isConnected();
   uint8_t  getAddress();
 

@@ -65,7 +65,7 @@ Default address = 0x60 for the version without address pins.
 and optional the Wire interface as parameter.
 - **PCA9633(uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor with I2C device address,
 and optional the Wire interface as parameter.
-- **bool begin()**
+- **bool begin(uint8_t mode1_mask = PCA9632_MODE1_DEFAULT, uint8_t mode2_mask = PCA9632_MODE2_DEFAULT)**
 initializes the library after startup.
 - **bool isConnected()** checks if address is available on I2C bus.
 
@@ -88,10 +88,10 @@ Write all channels at once
 
 ### Mode registers
 
-Check datasheet for details.
+Check datasheet for details. 
 
-- **uint8_t setMode1(uint8_t value)**
-- **uint8_t setMode2(uint8_t value)**
+- **uint8_t setMode1(uint8_t value)** bits see PCA9632.h
+- **uint8_t setMode2(uint8_t value)** bits see PCA9632.h
 - **uint8_t getMode1()**
 - **uint8_t getMode2()**
 
@@ -100,13 +100,21 @@ Check datasheet for details.
 
 Check datasheet for details.
 
-- **uint8_t setLedDriverMode(uint8_t channel, uint8_t mode)**
-- **uint8_t getLedDriverMode(uint8_t channel)**
+- **uint8_t setLedDriverModeAll(uint8_t mode)** set mode for all channels.
+- **uint8_t setLedDriverMode(uint8_t channel, uint8_t mode)** set mode for one channel (0..3).
+- **uint8_t getLedDriverMode(uint8_t channel)** get mode for one channel (0..3).
+
+|  mode               |  meaning  |
+|:-------------------:|:----------|
+|  PCA9632_LEDOFF     |  idem
+|  PCA9632_LEDON      |  idem
+|  PCA9632_LEDPWM     |  write PWM per channel
+|  PCA9632_LEDGRPPWM  |  
 
 
 ### Low level
 
-Public for now until API is developed.
+Public for now. Check datasheet for details.
 
 - **uint8_t setRegister(uint8_t reg, uint8_t mask)**
 - **uint8_t getRegister(uint8_t reg)**
@@ -116,7 +124,7 @@ Public for now until API is developed.
 
 #### Must
 
-- improve documentation
+- improve documentation (e.g. tables, masks etc)
 - get hardware to test.
 
 

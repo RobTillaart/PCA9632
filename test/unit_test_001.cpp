@@ -40,7 +40,7 @@ unittest_teardown()
 
 unittest(test_constants)
 {
-  fprintf(stderr, "\nerrorcodes");
+  fprintf(stderr, "\nerror codes");
   assertEqual(PCA9632_OK         , 0x00);
   assertEqual(PCA9632_ERROR      , 0xFF);
   assertEqual(PCA9632_ERR_WRITE  , 0xFE);
@@ -48,6 +48,32 @@ unittest(test_constants)
   assertEqual(PCA9632_ERR_MODE   , 0xFC);
   assertEqual(PCA9632_ERR_REG    , 0xFB);
   assertEqual(PCA9632_ERR_I2C    , 0xFA);
+
+  fprintf(stderr, "\nmode 1");
+  assertEqual(PCA9632_MODE1_AUTOINCR2, 0x80);
+  assertEqual(PCA9632_MODE1_AUTOINCR1, 0x40);
+  assertEqual(PCA9632_MODE1_AUTOINCR0, 0x20);
+  assertEqual(PCA9632_MODE1_SLEEP    , 0x10);
+  assertEqual(PCA9632_MODE1_SUB1     , 0x08);
+  assertEqual(PCA9632_MODE1_SUB2     , 0x04);
+  assertEqual(PCA9632_MODE1_SUB3     , 0x02);
+  assertEqual(PCA9632_MODE1_ALLCALL  , 0x01);
+  assertEqual(PCA9632_MODE1_NONE     , 0x00);
+  assertEqual(PCA9632_MODE1_DEFAULT  , 0x81);
+
+  fprintf(stderr, "\nmode 2");
+  assertEqual(PCA9632_MODE2_BLINK    , 0x20);
+  assertEqual(PCA9632_MODE2_INVERT   , 0x10);
+  assertEqual(PCA9632_MODE2_ACK      , 0x08);
+  assertEqual(PCA9632_MODE2_TOTEMPOLE, 0x04);
+  assertEqual(PCA9632_MODE2_NONE     , 0x00);
+  assertEqual(PCA9632_MODE2_DEFAULT  , 0x01);
+
+  fprintf(stderr, "\nledout");
+  assertEqual(PCA9632_LEDOFF         , 0x80);
+  assertEqual(PCA9632_LEDON          , 0x40);
+  assertEqual(PCA9632_LEDPWM         , 0x20);
+  assertEqual(PCA9632_LEDGRPPWM      , 0x10);
 }
 
 

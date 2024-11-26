@@ -39,6 +39,20 @@ void setup()
     }
     pca.write(channel, 0);
   }
+  delay(1000);
+
+  //  blink 5 times
+  for (int i = 0; i < 5; i++)
+  {
+    pca.setLedDriverModeAll(PCA9632_LEDON);
+    delay(500);
+    pca.setLedDriverModeAll(PCA9632_LEDOFF);
+    delay(500);
+  }
+  delay(1000);
+
+
+  pca.setLedDriverModeAll(PCA9632_LEDPWM);
 }
 
 
