@@ -116,8 +116,8 @@ Check datasheet for details.
 
 Public for now. Check datasheet for details.
 
-- **uint8_t setRegister(uint8_t reg, uint8_t mask)**
-- **uint8_t getRegister(uint8_t reg)**
+- **uint8_t writeReg(uint8_t reg, uint8_t mask)**
+- **uint8_t readReg(uint8_t reg)**
 
 
 ## Future

@@ -70,10 +70,10 @@ unittest(test_constants)
   assertEqual(PCA9632_MODE2_DEFAULT  , 0x01);
 
   fprintf(stderr, "\nledout");
-  assertEqual(PCA9632_LEDOFF         , 0x80);
-  assertEqual(PCA9632_LEDON          , 0x40);
-  assertEqual(PCA9632_LEDPWM         , 0x20);
-  assertEqual(PCA9632_LEDGRPPWM      , 0x10);
+  assertEqual(PCA9632_LEDOFF         , 0x00);
+  assertEqual(PCA9632_LEDON          , 0x01);
+  assertEqual(PCA9632_LEDPWM         , 0x02);
+  assertEqual(PCA9632_LEDGRPPWM      , 0x03);
 }
 
 
