@@ -30,15 +30,6 @@
 #define PCA9632_ALLCALLADR          0x0C
 
 
-//  REGISTER CONTENT
-//  TODO GRPPWM
-//  TODO GRPFREQ
-//  TODO SUBADR1
-//  TODO SUBADR2
-//  TODO SUBADR3
-//  TODO ALLCALLADR
-
-
 //  ERROR CODES - compatible with PCA9634
 #define PCA9632_OK                  0x00
 #define PCA9632_ERROR               0xFF
@@ -116,6 +107,34 @@ public:
   uint8_t getMode1();
   uint8_t getMode2();
 
+
+  /////////////////////////////////////////////////////
+  //
+  //  GROUP REGISTERS
+  //
+  void     setGroupPWM(uint8_t value);
+  uint8_t  getGroupPWM();
+  void     setGroupFREQ(uint8_t value);
+  uint8_t  getGroupFREQ();
+
+
+  /////////////////////////////////////////////////////
+  //
+  //  SUB CALL  -  ALL CALL  TODO  See PCA9634
+  //
+  //  nr = { 1, 2, 3 }
+  //  bool     enableSubCall(uint8_t nr);
+  //  bool     disableSubCall(uint8_t nr);
+  //  bool     isEnabledSubCall(uint8_t nr);
+  //  bool     setSubCallAddress(uint8_t nr, uint8_t address);
+  //  uint8_t  getSubCallAddress(uint8_t nr);
+  //  
+  //  bool     enableAllCall();
+  //  bool     disableAllCall();
+  //  bool     isEnabledAllCall();
+  //  bool     setAllCallAddress(uint8_t address);
+  //  uint8_t  getAllCallAddress();
+  
 
   /////////////////////////////////////////////////////
   //

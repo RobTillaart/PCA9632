@@ -130,22 +130,44 @@ uint8_t PCA9632::setMode1(uint8_t value)
   return writeRegister(PCA9632_MODE1, value);
 }
 
-
 uint8_t PCA9632::setMode2(uint8_t value)
 {
   return writeRegister(PCA9632_MODE2, value);
 }
-
 
 uint8_t PCA9632::getMode1()
 {
   return readRegister(PCA9632_MODE1);
 }
 
-
 uint8_t PCA9632::getMode2()
 {
   return readRegister(PCA9632_MODE2);
+}
+
+
+/////////////////////////////////////////////////////
+//
+//  GROUP REGISTERS
+//
+void PCA9632::setGroupPWM(uint8_t value)
+{
+  return writeRegister(PCA9632_GRPPWM, value);
+}
+
+uint8_t PCA9632::getGroupPWM()
+{
+  return readRegister(PCA9632_GRPPWM);
+}
+
+void PCA9632::setGroupFREQ(uint8_t value)
+{
+  return writeRegister(PCA9632_GRPFREQ, value);
+}
+
+uint8_t PCA9632::getGroupFREQ()
+{
+  return readRegister(PCA9632_GRPFREQ);
 }
 
 
