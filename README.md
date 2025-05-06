@@ -127,9 +127,9 @@ Check datasheet for details.
 
 Check datasheet for details.
 
-- **void setGroupPWM(uint8_t value)**
+- **uint8_t setGroupPWM(uint8_t value)**
 - **uint8_t getGroupPWM()**
-- **void setGroupFREQ(uint8_t value)**
+- **uint8_t setGroupFREQ(uint8_t value)**
 - **uint8_t getGroupFREQ()**
 
 
