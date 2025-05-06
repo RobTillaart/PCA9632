@@ -116,8 +116,8 @@ Check datasheet for details.
 
 Public for now. Check datasheet for details.
 
-- **uint8_t writeReg(uint8_t reg, uint8_t mask)**
-- **uint8_t readReg(uint8_t reg)**
+- **uint8_t writeRegister(uint8_t reg, uint8_t mask)**
+- **uint8_t readRegister(uint8_t reg)**
 
 
 ## Future
@@ -127,14 +127,12 @@ Public for now. Check datasheet for details.
 - improve documentation (e.g. tables, masks etc)
 - get hardware to test.
 
-
 #### Should
 
 - default values for functions.
 - implement all registers.
 - align PCA9634 if possible
 - examples
-- derived class PCA9633
 
 #### Could
 
