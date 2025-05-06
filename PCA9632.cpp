@@ -9,6 +9,14 @@
 
 #include "PCA9632.h"
 
+#define PCA9632_NO_INCREMENT      0x00
+#define PCA9632_AUTO_INCR_ALL     0x80
+//  not used.
+//  #define PCA9632_AUTO_INCR_xxx    0xA0
+//  #define PCA9632_AUTO_INCR_xxx    0xC0
+//  #define PCA9632_AUTO_INCR_xxx    0xE0
+
+
 
 //////////////////////////////////////////////////////////////
 //
@@ -90,7 +98,8 @@ uint8_t PCA9632::write(uint8_t R, uint8_t G, uint8_t B, uint8_t W)
 uint8_t PCA9632::write(uint8_t * arr)
 {
   _wire->beginTransmission(_address);
-  _wire->write(PCA9632_PWM0);
+  //  auto increment all  page 8 - table 5.
+  _wire->write(PCA9632_AUTO_INCR_ALL + PCA9632_PWM0);
   for (uint8_t i = 0; i < 4; i++)
   {
     _wire->write(arr[i]);
@@ -207,6 +216,7 @@ int PCA9632::lastError()
 uint8_t PCA9632::writeRegister(uint8_t reg, uint8_t value)
 {
   _wire->beginTransmission(_address);
+  //  no Auto-Increment  page 8 - table 5.
   _wire->write(reg);
   _wire->write(value);
   _error = _wire->endTransmission();
