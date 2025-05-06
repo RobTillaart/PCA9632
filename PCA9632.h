@@ -3,7 +3,7 @@
 //    FILE: PCA9632.h
 //  AUTHOR: Rob Tillaart
 //    DATE: 2024-11-25
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: Arduino library for PCA9632 and PCA9633 4 channel, I2C LED driver.
 //     URL: https://github.com/RobTillaart/PCA9632
 
@@ -12,7 +12,7 @@
 #include "Wire.h"
 
 
-#define PCA9632_LIB_VERSION         (F("0.1.0"))
+#define PCA9632_LIB_VERSION         (F("0.1.1"))
 
 //  REGISTERS PCA9632
 #define PCA9632_MODE1               0x00
@@ -68,7 +68,7 @@
 #define PCA9632_MODE2_ACK           0x08  //  0 = on STOP      1 = on ACK
 #define PCA9632_MODE2_TOTEMPOLE     0x04  //  0 = open drain   1 = totem-pole
 #define PCA9632_MODE2_NONE          0x00
-#define PCA9632_MODE2_DEFAULT       0x01
+#define PCA9632_MODE2_DEFAULT       0x02  //  fix #2
 
 //  modi for LEDOUT REGISTER (4x shifted))
 #define PCA9632_LEDOFF              0x00  //  default @ startup
@@ -136,10 +136,10 @@ public:
   //
   //  OTHER
   //
-  //  get/setRegister() will be protected in the future
+  //  readRegister() and writeRegister() will be protected in the future
   //  check datasheet.
-  uint8_t  writeReg(uint8_t reg, uint8_t mask);
-  uint8_t  readReg(uint8_t reg);
+  uint8_t  writeRegister(uint8_t reg, uint8_t mask);
+  uint8_t  readRegister(uint8_t reg);
 
 protected:
   uint8_t _address;

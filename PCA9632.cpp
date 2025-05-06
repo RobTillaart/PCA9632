@@ -204,7 +204,7 @@ int PCA9632::lastError()
 //
 //  LOW LEVEL
 //
-uint8_t PCA9632::writeReg(uint8_t reg, uint8_t value)
+uint8_t PCA9632::writeRegister(uint8_t reg, uint8_t value)
 {
   _wire->beginTransmission(_address);
   _wire->write(reg);
@@ -216,7 +216,7 @@ uint8_t PCA9632::writeReg(uint8_t reg, uint8_t value)
 }
 
 
-uint8_t PCA9632::readReg(uint8_t reg)
+uint8_t PCA9632::readRegister(uint8_t reg)
 {
   _wire->beginTransmission(_address);
   _wire->write(reg);
