@@ -114,6 +114,12 @@ uint8_t PCA9632::write(uint8_t * arr)
   return _error;
 }
 
+uint8_t PCA9632::allOff()
+{
+  uint8_t arr[4] = {0, 0, 0, 0};
+  return write(arr);
+}
+
 
 /////////////////////////////////////////////////////
 //

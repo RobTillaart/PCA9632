@@ -98,11 +98,13 @@ public:
   uint8_t  writeG(uint8_t G);
   uint8_t  writeB(uint8_t B);
   uint8_t  writeW(uint8_t W);
+  //  if not thinking in RGBW but in channels 0..3
   uint8_t  write(uint8_t channel, uint8_t value);
 
   //  RGBW setting, write four PWM registers, last has default to get "writeRGB()"
   uint8_t  write(uint8_t R, uint8_t G, uint8_t B, uint8_t W = 0);
   uint8_t  write(uint8_t * arr);  //  array of at least 4 elements.
+  uint8_t  allOff();
 
 
   /////////////////////////////////////////////////////
