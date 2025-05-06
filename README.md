@@ -48,7 +48,7 @@ which is identical (for now).
 - https://github.com/RobTillaart/PCA9634 (8 channel)
 - https://github.com/RobTillaart/PCA9635 (16 channel)
 - https://github.com/RobTillaart/PCA9685_RT (16 channel)
-- https://github.com/RobTillaart/map2colour 
+- https://github.com/RobTillaart/map2colour
 
 
 ## Interface
@@ -84,16 +84,53 @@ Write all channels at once
 
 - **uint8_t write(uint8_t R, uint8_t G, uint8_t B, uint8_t W = 0)** writes RGB values.
 - **uint8_t write(uint8_t \* arr)** array of at least 4 elements.
-
+- **uint8_t allOff()** shortcut, idem.
 
 ### Mode registers
 
-Check datasheet for details. 
+Check datasheet for details.
 
-- **uint8_t setMode1(uint8_t value)** bits see PCA9632.h
-- **uint8_t setMode2(uint8_t value)** bits see PCA9632.h
+- **uint8_t setMode1(uint8_t value)** see table below
+- **uint8_t setMode2(uint8_t value)** see table below
 - **uint8_t getMode1()**
 - **uint8_t getMode2()**
+
+#### Mode 1 bits
+
+|  value  |  define |
+|:-------:|:--------|
+|   0x80  |  PCA9632_MODE1_AUTOINCR2
+|   0x40  |  PCA9632_MODE1_AUTOINCR1
+|   0x20  |  PCA9632_MODE1_AUTOINCR0
+|   0x10  |  PCA9632_MODE1_SLEEP
+|   0x08  |  PCA9632_MODE1_SUB1
+|   0x04  |  PCA9632_MODE1_SUB2
+|   0x02  |  PCA9632_MODE1_SUB3
+|   0x01  |  PCA9632_MODE1_ALLCALL
+|   0x00  |  PCA9632_MODE1_NONE
+|   0x81  |  PCA9632_MODE1_DEFAULT
+
+
+#### Mode 2 bits
+
+|  value  |  define |
+|:-------:|:--------|
+|   0x20  |  PCA9632_MODE2_BLINK
+|   0x10  |  PCA9632_MODE2_INVERT
+|   0x08  |  PCA9632_MODE2_ACK
+|   0x04  |  PCA9632_MODE2_TOTEMPOLE
+|   0x00  |  PCA9632_MODE2_NONE
+|   0x02  |  PCA9632_MODE2_DEFAULT
+
+
+### Group registers
+
+Check datasheet for details.
+
+- **void setGroupPWM(uint8_t value)**
+- **uint8_t getGroupPWM()**
+- **void setGroupFREQ(uint8_t value)**
+- **uint8_t getGroupFREQ()**
 
 
 ### Led driver mode register
@@ -109,7 +146,7 @@ Check datasheet for details.
 |  PCA9632_LEDOFF     |  idem
 |  PCA9632_LEDON      |  idem
 |  PCA9632_LEDPWM     |  write PWM per channel
-|  PCA9632_LEDGRPPWM  |  
+|  PCA9632_LEDGRPPWM  |
 
 
 ### Low level
@@ -130,7 +167,8 @@ Public for now. Check datasheet for details.
 #### Should
 
 - default values for functions.
-- implement all registers.
+- implement register SUBADR1, SUBADR2, SUBADR3
+- implement register ALLCALLADR
 - align PCA9634 if possible
 - examples
 
