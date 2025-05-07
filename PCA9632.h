@@ -4,7 +4,7 @@
 //  AUTHOR: Rob Tillaart
 //    DATE: 2024-11-25
 // VERSION: 0.1.1
-// PURPOSE: Arduino library for PCA9632 and PCA9633 4 channel, I2C LED driver.
+// PURPOSE: Arduino library for PCA9632 and PCA9633 I2C 8 bit PWM LED driver, 4 channel.
 //     URL: https://github.com/RobTillaart/PCA9632
 
 
@@ -23,10 +23,12 @@
 #define PCA9632_PWM3                0x05
 #define PCA9632_GRPPWM              0x06
 #define PCA9632_GRPFREQ             0x07
+
 #define PCA9632_LEDOUT              0x08
 #define PCA9632_SUBADR1             0x09
 #define PCA9632_SUBADR2             0x0A
 #define PCA9632_SUBADR3             0x0B
+#define PCA9632_SUBADR(x)           (0x08 +(x))  //  x = 0..3
 #define PCA9632_ALLCALLADR          0x0C
 
 
@@ -74,7 +76,7 @@ class PCA9632
 public:
   explicit PCA9632(const uint8_t deviceAddress, TwoWire *wire = &Wire);
 
-  bool     begin(uint8_t mode1_mask = PCA9632_MODE1_DEFAULT, 
+  bool     begin(uint8_t mode1_mask = PCA9632_MODE1_DEFAULT,
                  uint8_t mode2_mask = PCA9632_MODE2_DEFAULT);
   bool     isConnected();
   uint8_t  getAddress();
@@ -82,20 +84,9 @@ public:
 
   /////////////////////////////////////////////////////
   //
-  //  WRITE
+  //  CONFIGURATION
   //
-  //  write single PWM registers
-  uint8_t  writeR(uint8_t R);
-  uint8_t  writeG(uint8_t G);
-  uint8_t  writeB(uint8_t B);
-  uint8_t  writeW(uint8_t W);
-  //  if not thinking in RGBW but in channels 0..3
-  uint8_t  write(uint8_t channel, uint8_t value);
-
-  //  RGBW setting, write four PWM registers, last has default to get "writeRGB()"
-  uint8_t  write(uint8_t R, uint8_t G, uint8_t B, uint8_t W = 0);
-  uint8_t  write(uint8_t * arr);  //  array of at least 4 elements.
-  uint8_t  allOff();
+  uint8_t  channelCount();
 
 
   /////////////////////////////////////////////////////
@@ -120,21 +111,45 @@ public:
 
   /////////////////////////////////////////////////////
   //
-  //  SUB CALL  -  ALL CALL  TODO  See PCA9634
+  //  WRITE
+  //
+  //  write single PWM registers
+  uint8_t  writeR(uint8_t R);
+  uint8_t  writeG(uint8_t G);
+  uint8_t  writeB(uint8_t B);
+  uint8_t  writeW(uint8_t W);
+  //  if not thinking in RGBW but in channels 0..3
+  uint8_t  write(uint8_t channel, uint8_t value);
+
+  //  RGBW setting, write four PWM registers, last has default to get "writeRGB()"
+  uint8_t  write(uint8_t R, uint8_t G, uint8_t B, uint8_t W = 0);
+  uint8_t  write(uint8_t * arr);  //  array of at least 4 elements.
+  uint8_t  allOff();
+
+
+
+
+  /////////////////////////////////////////////////////
+  //
+  //  SUB CALL
+  //  not tested yet, synced from PCA9634
   //
   //  nr = { 1, 2, 3 }
-  //  bool     enableSubCall(uint8_t nr);
-  //  bool     disableSubCall(uint8_t nr);
-  //  bool     isEnabledSubCall(uint8_t nr);
-  //  bool     setSubCallAddress(uint8_t nr, uint8_t address);
-  //  uint8_t  getSubCallAddress(uint8_t nr);
-  //  
-  //  bool     enableAllCall();
-  //  bool     disableAllCall();
-  //  bool     isEnabledAllCall();
-  //  bool     setAllCallAddress(uint8_t address);
-  //  uint8_t  getAllCallAddress();
-  
+  bool    enableSubCall(uint8_t nr);
+  bool    disableSubCall(uint8_t nr);
+  bool    isEnabledSubCall(uint8_t nr);
+  bool    setSubCallAddress(uint8_t nr, uint8_t address);
+  uint8_t getSubCallAddress(uint8_t nr);
+  //
+  //  ALL CALL
+  //  not tested yet, synced from PCA9634
+  //
+  bool    enableAllCall();
+  bool    disableAllCall();
+  bool    isEnabledAllCall();
+  bool    setAllCallAddress(uint8_t address);
+  uint8_t getAllCallAddress();
+
 
   /////////////////////////////////////////////////////
   //
@@ -153,20 +168,14 @@ public:
   int      lastError();
 
 
-  /////////////////////////////////////////////////////
-  //
-  //  OTHER
-  //
-  //  readRegister() and writeRegister() will be protected in the future
-  //  check datasheet.
-  uint8_t  writeRegister(uint8_t reg, uint8_t mask);
+protected:
+  //  DIRECT CONTROL
+  uint8_t  writeRegister(uint8_t reg, uint8_t value);  //  returns error status.
   uint8_t  readRegister(uint8_t reg);
 
-protected:
   uint8_t _address;
   TwoWire * _wire;
-
-  int _error = PCA9632_OK;
+  int     _error = PCA9632_OK;
 };
 
 

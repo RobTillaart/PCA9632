@@ -14,8 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - give **writeRegister() / readRegister()** full name.
 - add **PCA9632_AUTO_INCR_ALL** in **write(array)**
 - add **allOff()**
-- add **getGroupPWM() + setGroupPWM(uint8_t value)**
-- add **getGroupFREQ() + setGroupFREQ(uint8_t value)**
+- sync PCA9634 (not tested)
+  - add **getGroupPWM() + setGroupPWM(uint8_t value)**
+  - add **getGroupFREQ() + setGroupFREQ(uint8_t value)**
+  - add **subCall()** and **allCall()** functions.
 - update readme.md
 - minor edits
 

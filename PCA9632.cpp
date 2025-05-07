@@ -3,7 +3,7 @@
 //  AUTHOR: Rob Tillaart
 //    DATE: 2024-11-25
 // VERSION: 0.1.1
-// PURPOSE: Arduino library for PCA9632 and PCA9633 4 channel, I2C LED driver.
+// PURPOSE: Arduino library for PCA9632 and PCA9633 I2C 8 bit PWM LED driver, 4 channel.
 //     URL: https://github.com/RobTillaart/PCA9632
 
 
@@ -12,9 +12,9 @@
 #define PCA9632_NO_INCREMENT      0x00
 #define PCA9632_AUTO_INCR_ALL     0x80
 //  not used.
-//  #define PCA9632_AUTO_INCR_xxx    0xA0
-//  #define PCA9632_AUTO_INCR_xxx    0xC0
-//  #define PCA9632_AUTO_INCR_xxx    0xE0
+//  #define PCA963X_AUTO_INCR_xxx    0xA0
+//  #define PCA963X_AUTO_INCR_xxx    0xC0
+//  #define PCA963X_AUTO_INCR_xxx    0xE0
 
 
 
@@ -51,6 +51,12 @@ bool PCA9632::isConnected()
 uint8_t PCA9632::getAddress()
 {
   return _address;
+}
+
+
+uint8_t PCA9632::channelCount()
+{
+  return 4;
 }
 
 
@@ -169,6 +175,153 @@ uint8_t PCA9632::getGroupFREQ()
 {
   return readRegister(PCA9632_GRPFREQ);
 }
+
+
+/////////////////////////////////////////////////////
+//
+//  SUB CALL - to be tested
+//
+bool PCA9632::enableSubCall(uint8_t nr)
+{
+  if ((nr == 0) || (nr > 3)) return false;
+  uint8_t prev = getMode1();
+  uint8_t mask = prev;
+  if (nr == 1)      mask |= PCA9632_MODE1_SUB1;
+  else if (nr == 2) mask |= PCA9632_MODE1_SUB2;
+  else              mask |= PCA9632_MODE1_SUB3;
+  //  only update if changed.
+  if (mask != prev)
+  {
+    setMode1(mask);
+    //  TODO error handling ...
+  }
+  return true;
+}
+
+
+bool PCA9632::disableSubCall(uint8_t nr)
+{
+  if ((nr == 0) || (nr > 3)) return false;
+  uint8_t prev = getMode1();
+  uint8_t mask = prev;
+  if (nr == 1)      mask &= ~PCA9632_MODE1_SUB1;
+  else if (nr == 2) mask &= ~PCA9632_MODE1_SUB2;
+  else              mask &= ~PCA9632_MODE1_SUB3;
+  //  only update if changed.
+  if (mask != prev)
+  {
+    setMode1(mask);
+    //  TODO error handling ...
+  }
+  return true;
+}
+
+
+bool PCA9632::isEnabledSubCall(uint8_t nr)
+{
+  if ((nr == 0) || (nr > 3)) return false;
+  uint8_t mask = getMode1();
+  if (nr == 1) return (mask & PCA9632_MODE1_SUB1) > 0;
+  if (nr == 2) return (mask & PCA9632_MODE1_SUB2) > 0;
+  return (mask & PCA9632_MODE1_SUB3) > 0;
+}
+
+
+bool PCA9632::setSubCallAddress(uint8_t nr, uint8_t address)
+{
+  if ((nr == 0) || (nr > 3))
+  {
+    //  _error = ??  TODO
+    return false;
+  }
+  writeRegister(PCA9632_SUBADR(nr), address);
+  return true;
+}
+
+
+uint8_t PCA9632::getSubCallAddress(uint8_t nr)
+{
+  if ((nr == 0) || (nr > 3))
+  {
+    //  _error = ??  TODO
+    return 0;
+  }
+  uint8_t address = readRegister(PCA9632_SUBADR(nr));
+  return address;
+}
+
+
+/////////////////////////////////////////////////////
+//
+//  ALL CALL - to be tested
+//
+bool PCA9632::enableAllCall()
+{
+  uint8_t prev = getMode1();
+  uint8_t mask = prev | PCA9632_MODE1_ALLCALL;
+  //  only update if changed.
+  if (mask != prev)
+  {
+    setMode1(mask);
+    //  error handling TODO
+  }
+  return true;
+}
+
+
+bool PCA9632::disableAllCall()
+{
+  uint8_t prev = getMode1();
+  uint8_t mask = prev & ~PCA9632_MODE1_ALLCALL;
+  //  only update if changed.
+  if (mask != prev)
+  {
+    setMode1(mask);
+    //  error handling TODO
+  }
+  return true;
+}
+
+
+bool PCA9632::isEnabledAllCall()
+{
+  uint8_t mask = getMode1();
+  return (mask & PCA9632_MODE1_ALLCALL) > 0;
+}
+
+
+bool PCA9632::setAllCallAddress(uint8_t address)
+{
+  writeRegister(PCA9632_ALLCALLADR, address);
+  return true;
+}
+
+
+uint8_t PCA9632::getAllCallAddress()
+{
+  uint8_t address = readRegister(PCA9632_ALLCALLADR);
+  return address;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /////////////////////////////////////////////////////
