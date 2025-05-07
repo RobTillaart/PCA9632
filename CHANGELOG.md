@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - add **getGroupFREQ() + setGroupFREQ(uint8_t value)**
   - add **subCall()** and **allCall()** functions.
 - update readme.md
+- update keywords.txt
 - minor edits
 
 
